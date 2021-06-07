@@ -1,13 +1,16 @@
+  
 package br.com.zupacademy.juliana.mercadolivre.dto;
 
 import br.com.zupacademy.juliana.mercadolivre.model.User;
+import br.com.zupacademy.juliana.mercadolivre.validation.UniqueValue;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.time.Instant;
 
 public class UserDTO {
     @NotBlank
-    @Email
+    @Email @UniqueValue(domainClass = User.class,fieldName = "email")
     private String email;
     @NotBlank
     private Instant timestamp;
@@ -44,6 +47,4 @@ public class UserDTO {
                 '}';
     }
 }
-
-
 
