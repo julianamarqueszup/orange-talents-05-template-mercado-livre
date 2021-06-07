@@ -1,7 +1,7 @@
 package br.com.zupacademy.juliana.mercadolivre.controller;
 
-import br.com.zupacademy.juliana.mercadolivre.dto.UserDTO;
-import br.com.zupacademy.juliana.mercadolivre.model.User;
+import br.com.zupacademy.juliana.mercadolivre.dto.CategoryDTO;
+import br.com.zupacademy.juliana.mercadolivre.model.Category;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,16 +14,16 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/category")
+public class CategoryController {
     @PersistenceContext
-    EntityManager entityManager;
+    EntityManager manager;
 
     @PostMapping
     @Transactional
-    public ResponseEntity<UserDTO> save(@RequestBody @Valid UserDTO userDTO){
-        User user = userDTO.toModel();
-        entityManager.persist(user);
+    public ResponseEntity save(@RequestBody @Valid CategoryDTO categoryDTO) {
+        Category category = categoryDTO.toModel(manager);
+        manager.persist(category);
         return ResponseEntity.ok().build();
     }
 }
