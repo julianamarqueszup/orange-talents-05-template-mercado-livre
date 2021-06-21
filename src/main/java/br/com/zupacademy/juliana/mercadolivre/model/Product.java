@@ -47,7 +47,7 @@ public class Product {
         this.category = category;
         this.owner = owner;
         this.characteristics.addAll(characteristics.stream()
-                .map(characteristics.toModel(this))
+                .map(characteristics -> characteristics.toModel(this))
                 .collect(Collectors.toSet()));
         Assert.isTrue(this.characteristics.size() >= 3, "Every product needs" +
                 " have at least 3 characteristics");
