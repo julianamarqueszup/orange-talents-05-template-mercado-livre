@@ -1,7 +1,7 @@
 package br.com.zupacademy.juliana.mercadolivre.controller;
 
 import br.com.zupacademy.juliana.mercadolivre.dto.UserDTO;
-import br.com.zupacademy.juliana.mercadolivre.model.User;
+import br.com.zupacademy.juliana.mercadolivre.model.NewUser;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +22,7 @@ public class UserController {
     @PostMapping
     @Transactional
     public ResponseEntity<UserDTO> save(@RequestBody @Valid UserDTO userDTO){
-        User user = userDTO.toModel();
+        NewUser user = userDTO.toModel();
         entityManager.persist(user);
         return ResponseEntity.ok().build();
     }
