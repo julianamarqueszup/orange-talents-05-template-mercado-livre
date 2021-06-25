@@ -9,7 +9,7 @@ public class Opinion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int note;
+    private int grades;
     private String title;
     private String description;
     @ManyToOne
@@ -21,8 +21,8 @@ public class Opinion {
     public Opinion() {
     }
 
-    public Opinion(int note, String title, String description, Product product, NewUser consumer) {
-        this.note = note;
+    public Opinion(int grades, String title, String description, Product product, NewUser consumer) {
+        this.grades = grades;
         this.title = title;
         this.description= description;
         this.product = product;
@@ -30,7 +30,7 @@ public class Opinion {
     }
 
     public OpinionOutputDTO toOutputDTO() {
-        return new OpinionOutputDTO(note, title, description, product,
+        return new OpinionOutputDTO(grades, title, description, product,
                 consumer);
     }
 
@@ -42,7 +42,7 @@ public class Opinion {
         return description;
     }
 
-    public int getNote() {
-        return note;
+    public int getGrades() {
+        return grades;
     }
 }

@@ -13,7 +13,7 @@ public class ProductOutputDTO {
     private String name;
     private BigDecimal value;
     private Integer amount;
-    private Set<ProductCharacteristics> characteristics;
+    private Set<ProductCharacteristics> characteristicsDTO;
     private String description;
     private String category;
     private String owner;
@@ -22,13 +22,13 @@ public class ProductOutputDTO {
     public ProductOutputDTO(Long id, String name, Integer amount,
                             String description, BigDecimal value, Category category,
                             NewUser owner,
-                            Set<ProductCharacteristics> characteristics,
+                            Set<ProductCharacteristics> characteristicsDTO,
                             OffsetDateTime timestamp) {
         this.id = id;
         this.name = name;
         this.value = value;
         this.amount = amount;
-        this.characteristics = characteristics;
+        this.characteristicsDTO = characteristicsDTO;
         this.description = description;
         this.category = category.getName();
         this.owner = owner.getEmail();
@@ -51,8 +51,8 @@ public class ProductOutputDTO {
         return amount;
     }
 
-    public Set<ProductCharacteristics> getCharacteristics() {
-        return characteristics;
+    public Set<ProductCharacteristics> getCharacteristicsDTO() {
+        return characteristicsDTO;
     }
 
     public String getDescription() {

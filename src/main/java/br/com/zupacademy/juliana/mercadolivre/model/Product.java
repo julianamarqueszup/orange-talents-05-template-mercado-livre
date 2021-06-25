@@ -34,7 +34,7 @@ public class Product {
     private OffsetDateTime timestamp = OffsetDateTime.now();
 
     @Deprecated
-    public Product(@NotBlank String name, @Positive @NotNull Integer amount, @NotBlank @Size(max = 1000) String description, @Positive @NotNull BigDecimal value, Category category, NewUser owner, @Size(min = 3) @Valid List<ProductCharacteristicsDTO> characteristics) {
+    public Product(@NotBlank String name, @Positive @NotNull Integer amount, @NotBlank @Size(max = 1000) String description, @Positive @NotNull BigDecimal value, Category category, NewUser owner, @Size(min = 3) @Valid List<ProductCharacteristicsDTO> characteristicsDTO) {
     }
 
     public Product(String name, Integer amount,
@@ -47,7 +47,7 @@ public class Product {
         this.category = category;
         this.owner = owner;
         this.characteristics.addAll(characteristics.stream()
-                .map(characteristics -> characteristics.toModel(this))
+                .map(characteristicsDTO -> characteristicsDTO.toModel(this))
                 .collect(Collectors.toSet()));
         Assert.isTrue(this.characteristics.size() >= 3, "Every product needs" +
                 " have at least 3 characteristics");

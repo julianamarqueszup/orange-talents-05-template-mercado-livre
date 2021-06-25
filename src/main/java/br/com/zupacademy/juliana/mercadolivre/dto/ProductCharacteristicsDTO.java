@@ -16,9 +16,9 @@ public class ProductCharacteristicsDTO {
         this.description = description;
     }
 
-    public ProductCharacteristicsDTO(ProductCharacteristics characteristics) {
-        this.name = characteristics.getName();
-        this.description = characteristics.getDescription();
+    public ProductCharacteristicsDTO(ProductCharacteristics characteristicsDTO) {
+        this.name = characteristicsDTO.getName();
+        this.description = characteristicsDTO.getDescription();
     }
 
     public ProductCharacteristics toModel(Product product){
