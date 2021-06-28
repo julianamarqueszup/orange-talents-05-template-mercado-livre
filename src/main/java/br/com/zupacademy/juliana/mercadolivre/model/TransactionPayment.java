@@ -19,14 +19,14 @@ public class TransactionPayment {
     @NotNull
     @Valid
     @ManyToOne
-    private Purchase puchase;
+    private Purchase purchase;
 
     @Deprecated
     public TransactionPayment() {
     }
 
 
-    public TransactionPayment(StatusTransactionPayment statusTransactionPayment, String idTransaction, Purchase purchase) {
+    public TransactionPayment(StatusTransactionPayment statusTransactionPayment, String idTransactionPayment, Purchase purchase) {
         this.status = statusTransactionPayment;
         this.purchase = purchase;
         this.idTransactionGateway = idTransactionPayment;
@@ -34,7 +34,7 @@ public class TransactionPayment {
     }
 
     public boolean successfullyCompleted() {
-        return this.status.equals(StatusTransactionPayment.SUCESSO);
+        return this.status.equals(StatusTransactionPayment.SUCESS);
     }
 
     @Override

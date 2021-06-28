@@ -61,7 +61,7 @@ public class Purchase {
     }
 
     public String urlRedirection(UriComponentsBuilder uriComponentsBuilder) {
-        return this.formPayment.createdUrlRetorno(this, uriComponentsBuilder);
+        return this.formPayment.createdUrlRetorn(this, uriComponentsBuilder);
     }
 
     public void addTransactionPayment(@Valid RetornFormPayment retornFormPayment) {

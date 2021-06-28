@@ -1,5 +1,7 @@
 package br.com.zupacademy.juliana.mercadolivre.dto;
 
+import br.com.zupacademy.juliana.mercadolivre.model.FormPayment;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 

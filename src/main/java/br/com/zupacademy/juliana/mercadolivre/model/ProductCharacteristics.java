@@ -32,4 +32,5 @@ public class ProductCharacteristics {
     public String getDescription() {
         return description;
     }
-}
+
+    }

@@ -4,12 +4,10 @@ import br.com.zupacademy.juliana.mercadolivre.dto.ProductCharacteristicsDTO;
 import br.com.zupacademy.juliana.mercadolivre.dto.ProductOutputDTO;
 import org.springframework.util.Assert;
 
+import javax.crypto.spec.OAEPParameterSpec;
 import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.*;
@@ -32,14 +30,21 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
     private Set<ProductCharacteristics> characteristics = new HashSet<>();
     private OffsetDateTime timestamp = OffsetDateTime.now();
+    @OneToMany(mappedBy = "product", cascade = CascadeType.MERGE)
+    private Set<ProductImage> image = new HashSet<>();
+    @OneToMany(mappedBy = "product")
+    @OrderBy("title asc")
+    private SortedSet<Question> questions = new TreeSet<>();
+    @OneToMany(mappedBy = "product", cascade = CascadeType.MERGE)
+    private List<Opinion> opinion = new ArrayList<>();
 
     @Deprecated
-    public Product(@NotBlank String name, @Positive @NotNull Integer amount, @NotBlank @Size(max = 1000) String description, @Positive @NotNull BigDecimal value, Category category, NewUser owner, @Size(min = 3) @Valid List<ProductCharacteristicsDTO> characteristicsDTO) {
+    public Product() {
     }
 
     public Product(String name, Integer amount,
                    String description, BigDecimal value, Category category,
-                   NewUser owner, List<ProductCharacteristics> characteristics) {
+                   NewUser owner, List<ProductCharacteristicsDTO> characteristicsDTOS) {
         this.name = name;
         this.amount = amount;
         this.description = description;
@@ -47,18 +52,29 @@ public class Product {
         this.category = category;
         this.owner = owner;
         this.characteristics.addAll(characteristics.stream()
-                .map(characteristicsDTO -> characteristicsDTO.toModel(this))
+                .map(characteristics -> characteristics.toModel(this))
                 .collect(Collectors.toSet()));
-        Assert.isTrue(this.characteristics.size() >= 3, "Every product needs" +
-                " have at least 3 characteristics");
+        Assert.isTrue(this.characteristics.size() >= 3, "Todo produto precisa" +
+                " ter no mínimo 3 características");
     }
 
     public ProductOutputDTO toOutoutDTO() {
-        return new ProductOutputDTO(id, name, amount, description,
+        return new ProductOutputDTO(id, name,amount, description,
                 value, category, owner,
-                characteristics, timestamp);
+                characteristics, timestamp, image);
     }
 
+    public void associateImage(Set<String> links) {
+        Set<ProductImage> image = links.stream()
+                .map(link -> new ProductImage(this, link))
+                .collect(Collectors.toSet());
+
+        this.image.addAll(image);
+    }
+
+    public void setImage(Set<ProductImage> image) {
+        this.image = image;
+    }
 
     public Long getId() {
         return id;
@@ -68,14 +84,21 @@ public class Product {
         return owner;
     }
 
-    public boolean belongsToUser(NewUser owner) {
+    public boolean belongsUser(NewUser owner) {
         return this.owner.equals(owner);
     }
 
+    public List<Opinion> getOpinions() {
+        return opinion;
+    }
+
+    public SortedSet<Question> getQuestions() {
+        return questions;
+    }
+
     public boolean decreaseStock(@Positive int amount) {
-        Assert.isTrue(amount > 0, "\n" +
-                "Quantity must be greater than zero " +
-                "to decrease stock. Amount transferred: "+amount);
+        Assert.isTrue(amount > 0, "A quantidade deve ser maior que zero " +
+                "para abater o estoque. Quantidade repassada: "+amount);
 
         if(amount <= this.amount) {
             this.amount -= amount;

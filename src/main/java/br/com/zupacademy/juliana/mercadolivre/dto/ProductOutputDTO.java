@@ -3,6 +3,7 @@ package br.com.zupacademy.juliana.mercadolivre.dto;
 import br.com.zupacademy.juliana.mercadolivre.model.Category;
 import br.com.zupacademy.juliana.mercadolivre.model.NewUser;
 import br.com.zupacademy.juliana.mercadolivre.model.ProductCharacteristics;
+import br.com.zupacademy.juliana.mercadolivre.model.ProductImage;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
@@ -23,7 +24,7 @@ public class ProductOutputDTO {
                             String description, BigDecimal value, Category category,
                             NewUser owner,
                             Set<ProductCharacteristics> characteristicsDTO,
-                            OffsetDateTime timestamp) {
+                            OffsetDateTime timestamp, Set<ProductImage> image) {
         this.id = id;
         this.name = name;
         this.value = value;
